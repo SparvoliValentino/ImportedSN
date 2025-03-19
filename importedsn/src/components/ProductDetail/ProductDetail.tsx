@@ -1,13 +1,33 @@
+"use client"
+
+import { useCart } from "@/context/CartContext";
 import { IProducto } from "@/interfaces/IProduct";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 interface ProductDetailProps {
     product: IProducto;
 }
 
 const ProductDetail = ({ product }: ProductDetailProps) => {
-
-    console.log("Imagen del producto:", product.images[0]);
+    const {id, productName , price , images} = product
+    // console.log("Imagen del producto:", product.images[0]);
+     const { addToCart } = useCart()
+      const handleAddToCart = () => {
+        console.log('estoy aqui')
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+        Swal.fire({
+          title: "Vas a anadir este producto a tu carrito",
+          text: "Estas seguro?",
+          icon: "warning",
+          confirmButtonColor: "#3085d6",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            addToCart({ id, productName, price, images });
+            Swal.fire("Added!", "The product has been added to your cart.", "success");
+          }
+        });
+      }
 
     return (
         <div className="w-full flex flex-col mt-6 gap-6">
@@ -27,7 +47,9 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
                         <h1 className="text-black font-bold text-3xl">{product.productName}</h1>
                         <p className="text-black font-semibold text-4xl">${product.price}</p>
                         <p className="text-gray-800 font-normal text-2xl">Categoría: {product.category}</p>
-                        <button className="w-full bg-blue-700 rounded-lg hover:bg-blue-400 text-2xl font-bold">
+                        <button 
+                            onClick={handleAddToCart}
+                            className="w-full bg-blue-700 rounded-lg hover:bg-blue-400 text-2xl font-bold">
                             Añadir al carrito
                         </button>
                     </div>

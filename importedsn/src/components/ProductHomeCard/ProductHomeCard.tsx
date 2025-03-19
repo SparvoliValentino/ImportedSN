@@ -6,11 +6,11 @@ import { useCart } from "@/context/CartContext";
 
 const ProductHomeCard = ({ id, productName, price, images }: { id: string, productName: string, price: number, images: string[] }) => {
 
-  const {addToCart} = useCart()
+  const { addToCart } = useCart()
   const imageUrl = images.length > 0 ? images[0] : "/placeholder.png"; //
-  const handleAddToCart = () =>{
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]" )
+  const handleAddToCart = () => {
     console.log('estoy aqui')
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]")
     Swal.fire({
       title: "Vas a anadir este producto a tu carrito",
       text: "Estas seguro?",
@@ -18,7 +18,7 @@ const ProductHomeCard = ({ id, productName, price, images }: { id: string, produ
       confirmButtonColor: "#3085d6",
     }).then((result) => {
       if (result.isConfirmed) {
-        addToCart({id, productName, price, images});
+        addToCart({ id, productName, price, images });
         Swal.fire("Added!", "The product has been added to your cart.", "success");
       }
     });
@@ -27,7 +27,7 @@ const ProductHomeCard = ({ id, productName, price, images }: { id: string, produ
   return (
     <div className="w-[250px] bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200" key={id}>
       {/* Imagen del Producto */}
-      <Link href={`/productos/${id}`}>
+      <Link href={`/productos/${id}`} className="z-0">
         <div className="relative w-full h-[180px] flex items-center justify-center bg-gray-100">
           <Image
             src={imageUrl}
@@ -47,10 +47,10 @@ const ProductHomeCard = ({ id, productName, price, images }: { id: string, produ
           </div>
 
           {/* Botón de agregar al carrito */}
-          <button 
-          onClick={handleAddToCart}
-          className="mt-3 w-full bg-black text-white py-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-800">
-            Add to cart
+          <button
+            onClick={handleAddToCart}
+            className="mt-3 w-full bg-black text-white py-2 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-800 z-50">
+            Añadir al carrito
           </button>
         </div>
       </Link>
