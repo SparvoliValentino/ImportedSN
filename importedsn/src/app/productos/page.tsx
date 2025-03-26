@@ -1,3 +1,4 @@
+import CategoryFilter from "@/components/CategoryFilter/CategoryFilter"
 import FilteredProducts from "@/components/FormFilter/FormFilter"
 
 const Productos = () => {
@@ -7,10 +8,12 @@ const Productos = () => {
                 <h2 className="text-black font-bold text-4xl">Nuestros productos</h2>
 
                 <div className="flex">
-                    <div className="w-[1200px] max-w-[1200px] flex justify-center items-center flex-nowrap gap-4">
-                        <FilteredProducts />
+                    <CategoryFilter />
+                    <div className="w-[1000px] max-w-[1000px] flex justify-center items-center flex-nowrap gap-4">
+                        <FilteredProducts
+                            categoria="all"
+                        />
                     </div>
-
                 </div>
             </div>
         </div>

@@ -43,6 +43,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCart([]);
         localStorage.setItem('cart', '[]');
     };
+    
 
     return (
         <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartCount: cart.length }}>
