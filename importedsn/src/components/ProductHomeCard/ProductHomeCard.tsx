@@ -1,5 +1,4 @@
 import Image from "next/image";
-import imagenEjemplo from '../../../public/imagenEjemploProducto.jpeg';
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useCart } from "@/context/CartContext";
@@ -10,7 +9,7 @@ const ProductHomeCard = ({ id, productName, price, images }: { id: string, produ
   const imageUrl = images.length > 0 ? images[0] : "/placeholder.png"; //
   const handleAddToCart = () => {
     console.log('estoy aqui')
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+    // const cart = JSON.parse(localStorage.getItem("cart") || "[]")
     Swal.fire({
       title: "Vas a anadir este producto a tu carrito",
       text: "Estas seguro?",
@@ -25,10 +24,10 @@ const ProductHomeCard = ({ id, productName, price, images }: { id: string, produ
   }
 
   return (
-    <div className="w-[250px] bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200" key={id}>
+    <div className="w-[150px] md:w-[250px] bg-white md:rounded-lg shadow-lg overflow-hidden border border-gray-200" key={id}>
       {/* Imagen del Producto */}
       <Link href={`/productos/${id}`} className="z-0">
-        <div className="relative w-full h-[180px] flex items-center justify-center bg-gray-100">
+        <div className="relative w-full h-[140px] md:h-[180px] flex items-center justify-center bg-gray-100">
           <Image
             src={imageUrl}
             alt="Producto"

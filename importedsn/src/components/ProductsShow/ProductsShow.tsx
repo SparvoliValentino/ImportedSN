@@ -31,7 +31,7 @@ const ProductosShow = () => {
                 );
                 const text = await response.text();
                 const jsonData = JSON.parse(text.substring(47, text.length - 2));
-
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const productosData = jsonData.table.rows.map((row: any) => {
                     const id = row.c[0]?.v?.toString() || "ID Desconocido";
                     const nombre = row.c[1]?.v?.toString() || "Sin nombre";

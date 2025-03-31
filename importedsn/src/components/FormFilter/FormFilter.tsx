@@ -3,121 +3,135 @@ import { useEffect, useState } from "react";
 import { IProducto } from "@/interfaces/IProduct";
 import { fetchingProducts } from "@/helpers/productHelper";
 import ProductCard from "../ProductHomeCard/ProductHomeCard"; // Componente para mostrar productos
-import categoria from "@/app/productos/categoria/[category]/page";
 
-// const FilteredProducts = () => {
-//   const [products, setProducts] = useState<IProducto[]>([]);
-//   const [filteredProducts, setFilteredProducts] = useState<IProducto[]>([]);
-//   const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const fetchedProducts = await fetchingProducts();
-//       setProducts(fetchedProducts);
-
-//       // ✅ Agregar la opción "Todo" a las categorías
-//       const uniqueCategories = ["Todo", ...new Set(fetchedProducts.map((p) => p.category))];
-//       setSelectedCategory("Todo"); // ✅ Asegura que la categoría inicial sea "Todo"
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   useEffect(() => {
-//     if (selectedCategory === "Todo") {
-//       setFilteredProducts(products); // ✅ Si es "Todo", muestra todos los productos
-//     } else {
-//       setFilteredProducts(products.filter((p) => p.category === selectedCategory));
-//     }
-//   }, [selectedCategory, products]); // ✅ Se ejecuta cuando `selectedCategory` o `products` cambian
-
-
-//   return (
-//     <div className="w-full max-w-[1200px] mx-auto flex gap-6">
-//       {/* 📌 Barra lateral fija con el filtro */}
-//       <div className="w-[250px] h-[300px] bg-white p-4 shadow-md rounded-md flex-shrink-0">
-//         <h2 className="text-md font-bold text-black mb-4">Filtrar por categoría</h2>
-
-//         {/* Selector de Categoría */}
-//         <select
-//           className="w-full px-4 py-2 border border-gray-400 rounded-md text-black"
-//           value={selectedCategory}
-//           onChange={(e) => setSelectedCategory(e.target.value)}
-//         >
-//           <option value="all">Todo</option> {/* ✅ Opción "Todo" */}
-//           {[...new Set(products.map((p) => p.category))].map((categoria) => (
-//             <option key={categoria} value={categoria} className="text-black">
-//               {categoria}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-
-
-//       {/* 📌 Contenedor de productos (ocupa todo el espacio disponible) */}
-// <div className="flex-grow flex flex-wrap gap-4 justify-center">
-//   {filteredProducts.length > 0 ? (
-//     filteredProducts.map((product) => (
-//       <ProductCard
-//         key={product.id}
-//         id={product.id}
-//         productName={product.productName}
-//         price={product.price}
-//         images={Array.isArray(product.images) ? product.images : ["/placeholder.png"]} // Solo pasamos la primera imagen
-//       />
-//     ))
-//   ) : (
-//     <p className="text-gray-500">No hay productos en esta categoría.</p>
-//   )}
-// </div>
-//     </div>
-//   );
-// };
-
-// export default FilteredProducts;
+const PRODUCTS_PER_PAGE = 8;
 
 const FilteredProducts = ({ categoria }: { categoria: string }) => {
-  const [products, setProducts] = useState<IProducto[]>([]);
+  // const [products, setProducts] = useState<IProducto[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<IProducto[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchData = async () => {
       const fetchedProducts = await fetchingProducts();
-      setProducts(fetchedProducts);
-  
-      if (!categoria || categoria === "all" || categoria === "Todo") {
-        setFilteredProducts(fetchedProducts);
-        return;
+      // setProducts(fetchedProducts);
+
+      let filtered = fetchedProducts;
+      if (categoria && categoria !== "all" && categoria !== "Todo") {
+        filtered = fetchedProducts.filter(
+          (product) =>
+            typeof product.category === "string" &&
+            product.category.toLowerCase() === categoria.toLowerCase()
+        );
       }
-  
-      const filtered = fetchedProducts.filter(
-        (product) =>
-          typeof product.category === "string" &&
-          product.category.toLowerCase() === categoria.toLowerCase()
-      );
-  
+
       setFilteredProducts(filtered);
+      setCurrentPage(1); // Reinicia a la primera página si cambia la categoría
     };
-  
+
     fetchData();
   }, [categoria]);
-  
+
+  const getPaginationRange = (current: number, total: number) => {
+    const delta = 1; // Páginas alrededor de la actual
+    const range = [];
+    // const rangeWithDots: (number | string)[] = [];
+
+    let left = current - delta;
+    let right = current + delta;
+
+    // Asegura que esté dentro del rango válido
+    left = Math.max(2, left);
+    right = Math.min(total - 1, right);
+
+    // Siempre mostrar la primera página
+    range.push(1);
+
+    // Agrega "..." si hay separación entre 1 y el bloque izquierdo
+    if (left > 2) {
+      range.push("...");
+    }
+
+    // Agrega las páginas cercanas a la actual
+    for (let i = left; i <= right; i++) {
+      range.push(i);
+    }
+
+    // Agrega "..." si hay separación entre el bloque derecho y la última
+    if (right < total - 1) {
+      range.push("...");
+    }
+
+    // Siempre mostrar la última página
+    if (total > 1) {
+      range.push(total);
+    }
+
+    return range;
+  };
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * PRODUCTS_PER_PAGE,
+    currentPage * PRODUCTS_PER_PAGE
+  );
 
   return (
-    <div className="flex-grow flex flex-wrap gap-4 justify-center">
-      {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            productName={product.productName}
-            price={product.price}
-            images={Array.isArray(product.images) ? product.images : ["/placeholder.png"]}
-          />
-        ))
-      ) : (
-        <p className="text-gray-500">No hay productos en esta categoría.</p>
+    <div className="flex flex-col items-center w-full">
+      <div className="flex-grow flex flex-wrap gap-4 md:gap-4 justify-center md:justify-center">
+        {paginatedProducts.length > 0 ? (
+          paginatedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              productName={product.productName}
+              price={product.price}
+              images={Array.isArray(product.images) ? product.images : ["/placeholder.png"]}
+            />
+          ))
+        ) : (
+          <p className="text-gray-500">No hay productos en esta categoría.</p>
+        )}
+      </div>
+
+      {/* Paginador estilo Google */}
+      {totalPages > 1 && (
+        <div className="flex items-center gap-2 mt-4">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            className="text-blue-600 disabled:opacity-50"
+          >
+            &lt; Atras
+          </button>
+
+          {getPaginationRange(currentPage, totalPages).map((page, idx) =>
+            page === "..." ? (
+              <span key={idx} className="px-2">
+                ...
+              </span>
+            ) : (
+              <button
+                key={idx}
+                onClick={() => setCurrentPage(Number(page))}
+                className={`px-2 text-sm ${currentPage === page ? "font-bold text-black" : "text-blue-600"
+                  }`}
+              >
+                {page}
+              </button>
+            )
+          )}
+
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            className="text-blue-600 disabled:opacity-50"
+          >
+            Siguiente &gt; 
+          </button>
+        </div>
       )}
+
     </div>
   );
 };

@@ -21,7 +21,7 @@ export const fetchingProducts = async (): Promise<IProducto[]> => {
         const response = await fetch(API_URL);
         const text = await response.text();
         const jsonData = JSON.parse(text.substring(47, text.length - 2));
-
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const productosData: IProducto[] = jsonData.table.rows.map((row: any) => {
             const id = row.c[0]?.v?.toString() || "ID Desconocido";
             const productName = row.c[1]?.v?.toString() || "Sin nombre"; // ✅ Ahora coincide con IProducto

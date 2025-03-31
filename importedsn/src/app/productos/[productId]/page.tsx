@@ -25,6 +25,7 @@ const ProductDetailPage = async ({ params }: ProductPageProps) => {
 
         );
     } catch (error) {
+        console.log(error)
         return <p className="text-red-500">Error al cargar el producto.</p>;
     }
 };

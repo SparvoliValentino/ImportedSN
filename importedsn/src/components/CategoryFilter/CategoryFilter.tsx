@@ -34,7 +34,7 @@ const CategoryFilter = () => {
   };
 
   return (
-    <div className="w-[250px] h-[300px] bg-white p-4 shadow-md rounded-md">
+    <div className="w-[300px] h-[150px] md:w-[250px] md:h-[300px] bg-white p-4 shadow-md rounded-md">
       <h2 className="text-md font-bold text-black mb-4">Filtrar por categoría</h2>
       <select
         onChange={handleChange}

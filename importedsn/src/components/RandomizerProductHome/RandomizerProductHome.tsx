@@ -30,12 +30,12 @@ const RandomProductHome = () => {
     };
 
     loadProducts();
-  }, []);
+  }, [ randomProducts]);
 
   if (!isClient) return <p className="text-center text-gray-500">Cargando...</p>;
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="flex flex-wrap md:gap-4 justify-center">
       {randomProducts.map((product, index) => (
         <ProductHomeCard
           key={`${product.id}-${index}`} // Asegura que cada carta tiene una key única

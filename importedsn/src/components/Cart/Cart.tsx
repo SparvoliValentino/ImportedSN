@@ -3,6 +3,7 @@ import { useCart } from "@/context/CartContext";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo } from "react";
 
 const WHATSAPP_NUMBER = "5493364273461"; // Código de país + número, sin espacios ni guiones
@@ -13,7 +14,6 @@ const Cart = () => {
     useEffect(() => {
         console.log(cart);
     })
-
 
     // 🧠 Generar mensaje de WhatsApp dinámicamente
     const whatsappMessage = useMemo(() => {
@@ -40,41 +40,42 @@ const Cart = () => {
     return (
         <div className="flex flex-col gap-4 w-full max-w-[1000px] mx-auto">
             {cart.length === 0 ? (
-                <div>
-                    <h2 className="text-white">Tu carrito esta vacio</h2>
+                <div className="w-full flex flex-col justify-evenly items-center h-[300px]">
+                    <h2 className="text-gray-400 text-xl">Tu carrito se encuentra vacio, asi que es momento de comenzar tu busqueda</h2>
+                    <Link href={'/productos'} className="bg-blue-500 hover:bg-blue-200 rounded-2xl p-3 text-white font-bold">Exporta nuestros productos</Link>
                 </div>
-            ) : cart.map((product) => (
+            ) : (cart.map((product) => (
                 <div key={product.id} className="bg-white flex justify-evenly items-center w-full h-[70px] rounded-md">
                     <h2 className="text-black font-semibold">{product.productName}</h2>
                     <h2 className="text-black font-bold">{product.price}</h2>
-                    {/* <img src={product.images[0]} className="w-full max-w-[60px] max-h-[60px] bg-red-800" alt="" /> */}
                     <Image
                         src={product.images[0]}
                         className="w-full max-w-[60px] max-h-[60px]"
-                        width={60} // Asegura que Next.js lo renderice correctamente
+                        width={60}
                         height={60}
                         alt=""
                     />
-                    {/* <h2 className="">{product.images.[0]}</h2> */}
                     <button
                         className="bg-red-500 rounded-full p-1 w-[40px] h-[40px]"
                         onClick={() => removeFromCart(Number(product.id))}
                     >
-                        <FontAwesomeIcon icon={faX} className="text-black "/>
+                        <FontAwesomeIcon icon={faX} className="text-white " />
                     </button>
                 </div>
-            ))}
+            )))}
+            {cart.length > 0 && (
+                <div className="my-5 flex justify-center items-center w-full">
+                    <a
+                        href={generateWhatsAppLink()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 bg-green-600 text-white text-center py-3 px-6 rounded-lg hover:bg-green-700 transition"
+                    >
+                        Finalizar compra por WhatsApp
+                    </a>
+                </div>
+            )}
 
-            <div className="my-5 flex justify-center items-center w-full">
-                <a
-                    href={generateWhatsAppLink()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 bg-green-600 text-white text-center py-3 px-6 rounded-lg hover:bg-green-700 transition"
-                >
-                    Finalizar compra por WhatsApp
-                </a>
-            </div>
         </div>
     )
 }
