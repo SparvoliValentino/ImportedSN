@@ -29,9 +29,10 @@ const CategoryFilter = () => {
     if (categoria === 'Todo') {
       router.push('/productos');
     } else {
-      router.push(`/productos/categoria/${categoria}`);
+      router.push(`/productos/categoria/${encodeURIComponent(categoria)}`);
     }
   };
+  
 
   return (
     <div className="w-[300px] h-[150px] md:w-[250px] md:h-[300px] bg-white p-4 shadow-md rounded-md">

@@ -37,3 +37,15 @@ body {
   }
 }
 
+/* globals.css */
+.text-outline{
+  color: transparent;
+  -webkit-text-stroke: 1px white; /* ajustá el grosor y color */
+  text-transform: uppercase;
+}
+
+.text-outline-black{
+  color: transparent;
+  -webkit-text-stroke: 2px black; /* ajustá el grosor y color */
+  text-transform: uppercase;
+}

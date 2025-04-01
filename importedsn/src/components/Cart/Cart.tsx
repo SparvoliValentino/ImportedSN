@@ -44,7 +44,7 @@ const Cart = () => {
     <div className="flex flex-col gap-4 w-full max-w-[1000px] mx-auto">
       {cart.length === 0 ? (
         <div className="w-full flex flex-col justify-evenly items-center h-[300px]">
-          <h2 className="text-gray-400 text-xl">
+          <h2 className="text-gray-400 text-xl text-center">
             Tu carrito se encuentra vacío, así que es momento de comenzar tu búsqueda
           </h2>
           <Link
