@@ -5,4 +5,5 @@ export interface IProducto {
     images: string[];
     category?:string;
     descripcion?:string;
+    cantidad?:number;
 }
