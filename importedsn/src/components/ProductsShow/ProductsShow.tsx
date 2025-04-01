@@ -68,6 +68,7 @@ const ProductosShow = () => {
                     productName={product.productName}
                     price={product.price}
                     images={Array.isArray(product.images) ? product.images : ["/placeholder.png"]} // Tomamos solo la primera imagen
+                    stock={product.stock ? product.stock:false}
                 />
             ))}
         </div>

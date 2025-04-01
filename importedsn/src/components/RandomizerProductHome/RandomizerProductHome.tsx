@@ -43,6 +43,7 @@ const RandomProductHome = () => {
           productName={product.productName}
           price={product.price}
           images={product.images} // Tomamos solo la primera imagen
+          stock={product.stock ? product.stock: false}
         />
       ))}
     </div>
