@@ -1,12 +1,5 @@
 import { IProducto } from "@/interfaces/IProduct";
 
-// const convertirEnlaceGoogleDrive = (url: string): string => {
-//     if (!url) return "/placeholder.png";
-
-//     const match = url.match(/\/d\/(.*?)\//);
-//     return match ? `https://drive.google.com/uc?export=view&id=${match[1]}` : "/placeholder.png";
-// };
-
 const API_URL = "https://docs.google.com/spreadsheets/d/1E1nTrr3iZGiQH-7FNzJA-7ypaKvYBp5hsk1UTbZnu4M/gviz/tq?tqx=out:json"
 
 export const convertirEnlaceGoogleDrive = (url: string): string => {
@@ -35,8 +28,11 @@ export const fetchingProducts = async (): Promise<IProducto[]> => {
 
             const category = row.c[5]?.v?.toString() || "Sin categoría"; // ✅ Se adapta a IProducto
             const descripcion = row.c[6]?.v?.toString() || "Sin descripción"; 
+            const stockValue = row.c[7]?.v?.toString().toUpperCase();
+            const stock = stockValue === "SI";
 
-            return { id, productName, price, images, category, descripcion };
+
+            return { id, productName, price, images, category, descripcion, stock};
         });
 
         console.log("Productos obtenidos:", productosData); // Debugging

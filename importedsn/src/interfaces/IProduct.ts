@@ -6,4 +6,5 @@ export interface IProducto {
     category?:string;
     descripcion?:string;
     cantidad?:number;
+    stock?:boolean;
 }

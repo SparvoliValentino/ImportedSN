@@ -87,6 +87,7 @@ const FilteredProducts = ({ categoria }: { categoria: string }) => {
               productName={product.productName}
               price={product.price}
               images={Array.isArray(product.images) ? product.images : ["/placeholder.png"]}
+              stock={product.stock ? product.stock: false}
             />
           ))
         ) : (
