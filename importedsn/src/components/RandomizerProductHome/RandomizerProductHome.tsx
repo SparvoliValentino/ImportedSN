@@ -20,10 +20,16 @@ const RandomProductHome = () => {
     const loadProducts = async () => {
       try {
         const productosData = await fetchingProducts();
-        if (productosData.length > 0) {
-          setRandomProducts(getRandomProducts(productosData, 4));
-          console.log("Productos aleatorios seleccionados:", randomProducts); // DEBUG
+
+        // Filtrar productos que sí tienen stock
+        const disponibles = productosData.filter((producto) => producto.stock);
+
+        if (disponibles.length > 0) {
+          const aleatorios = getRandomProducts(disponibles, 4);
+          setRandomProducts(aleatorios);
+          console.log("Productos aleatorios seleccionados:", aleatorios);
         }
+
       } catch (error) {
         console.error("Error al obtener productos:", error);
       }
@@ -43,7 +49,7 @@ const RandomProductHome = () => {
           productName={product.productName}
           price={product.price}
           images={product.images} // Tomamos solo la primera imagen
-          stock={product.stock ? product.stock: false}
+          stock={product.stock ? product.stock : false}
         />
       ))}
     </div>
