@@ -1,6 +1,7 @@
 import { IProducto } from "@/interfaces/IProduct";
 
-const API_URL = "https://docs.google.com/spreadsheets/d/1E1nTrr3iZGiQH-7FNzJA-7ypaKvYBp5hsk1UTbZnu4M/gviz/tq?tqx=out:json"
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+
 
 export const convertirEnlaceGoogleDrive = (url: string): string => {
     if (!url) return "/placeholder.png";
@@ -35,7 +36,6 @@ export const fetchingProducts = async (): Promise<IProducto[]> => {
             return { id, productName, price, images, category, descripcion, stock};
         });
 
-        console.log("Productos obtenidos:", productosData); // Debugging
         return productosData;
     } catch (error) {
         console.error("Error al obtener productos:", error);

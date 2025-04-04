@@ -1,12 +1,12 @@
-import Image from "next/image"
-import MondLogo from "../../../public/mondSNLogo.jpg"
+// import Image from "next/image"
+// import MondLogo from "../../../public/mondSNLogo.jpg"
 import Link from "next/link"
 import { Poppins } from 'next/font/google';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const poppins = Poppins({ weight: '900', subsets: ['latin'], });
 
-const WHATSAPP_NUMBER = "5493364018300";
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
 const Footer = () => {
 
@@ -18,7 +18,7 @@ const Footer = () => {
 
 
     return (
-        <footer className="bg-white dark:bg-gray-900">
+        <footer>
             <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
@@ -29,7 +29,7 @@ const Footer = () => {
                     </div>
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
-                            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Sobre nosotros</h2>
+                            <h2 className="mb-6 text-sm font-semibold text-gray-200 uppercase dark:text-white">Sobre nosotros</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
                                     <a href="https://flowbite.com/" className="hover:underline">Quienes somos?</a>
@@ -40,7 +40,7 @@ const Footer = () => {
                             </ul>
                         </div>
                         <div>
-                            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Nuestras redes</h2>
+                            <h2 className="mb-6 text-sm font-semibold text-gray-200 uppercase dark:text-white">Nuestras redes</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
                                     <a href="https://github.com/themesberg/flowbite" className="hover:underline ">Instagram</a>
@@ -51,7 +51,7 @@ const Footer = () => {
                             </ul>
                         </div>
                         <div>
-                            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Productos</h2>
+                            <h2 className="mb-6 text-sm font-semibold text-gray-200 uppercase dark:text-white">Productos</h2>
                             <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                 <li className="mb-4">
                                     <a href="#" className="hover:underline">Todos</a>

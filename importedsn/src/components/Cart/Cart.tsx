@@ -6,8 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
+import { Poppins } from 'next/font/google';
 
-const WHATSAPP_NUMBER = "5493364018300"; // Número final
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+
+
+const poppins = Poppins({ weight: '900', subsets: ['latin'], });
+
 
 const Cart = () => {
   const { cart, removeFromCart, updateCantidad } = useCart();
@@ -106,7 +111,11 @@ const Cart = () => {
       {cart.length > 0 && (
         <>
           <div className="w-full max-w-[500px] mx-auto flex flex-col justify-center items-center border-t-2 border-gray-300 pt-4">
-            <h2 className="text-black text-2xl">TOTAL: ${total}</h2>
+            <div className="flex gap-3">
+              <h2 className={`${poppins.className} text-outline text-xl md:text-2xl font-bold text-white`}>TOTAL :</h2>
+              <p className="text-xl font-bold text-white md:text-3xl">${total}</p>
+
+            </div>
             <p className="text-gray-500 text-center text-[12px]">
               Tené en cuenta que este monto no incluye el envío. Podés consultarlo por WhatsApp al finalizar tu pedido.
             </p>

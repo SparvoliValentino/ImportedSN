@@ -25,8 +25,8 @@ const Header = () => {
             <div className="w-full">
                 <nav className="w-full">
                     <ul className="w-full flex justify-evenly items-center">
-                        <Link href="/productos"><h2 className={`${anton.className} text-[20px] text-white hover:font-bold hover:text-[20px] hover:shadow-2xl hover:shadow-blue-600 tracking-widest`}>Nosotros</h2></Link>
-                        <Link href="/productos"><li className={`${anton.className} text-[20px] text-white hover:font-bold hover:text-[20px] hover:shadow-2xl hover:shadow-blue-600 tracking-widest`}>Productos</li></Link>
+                        <Link href="/nosotros"><h2 className={`${anton.className} text-[20px] text-white hover:font-bold hover:text-[20px] hover:text-gray-400 tracking-widest`}>Nosotros</h2></Link>
+                        <Link href="/productos"><li className={`${anton.className} text-[20px] text-white hover:font-bold hover:text-[20px] hover:text-gray-400 tracking-widest`}>Productos</li></Link>
                         <Link href={'/carrito'}>
                             <FontAwesomeIcon icon={faCartShopping} bounce={cartCount > 0} className="w-[30px] h-[30px] text-white" />
                             {cartCount > 0 && <span className="ml-2 text-sm font-semibold text-white">{cartCount}</span>}
